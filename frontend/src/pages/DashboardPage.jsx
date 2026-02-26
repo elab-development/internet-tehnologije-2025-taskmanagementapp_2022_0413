@@ -8,6 +8,7 @@ import Navbar from '../components/Navbar';
 import Button from '../components/Button';
 import Modal from '../components/Modal';
 import Input from '../components/Input';
+import TaskChart from '../components/TaskChart';
 
 const DashboardPage = () => {
   const [projects, setProjects] = useState([]);
@@ -370,7 +371,7 @@ const DashboardPage = () => {
         </div>
 
         {/* Tasks Section */}
-        <div>
+<div className="mb-10">
           <h2 className="text-2xl font-bold text-slate-100 mb-6">Moji zadaci</h2>
           
           {/* Filters */}
@@ -481,6 +482,10 @@ const DashboardPage = () => {
             </div>
           )}
         </div>
+          <div className="mb-8">
+          <h2 className="text-2xl font-bold text-slate-100 mb-6">Statistika zadataka</h2>
+          <TaskChart />
+          </div>
       </div>
 
       {/* Create Project Modal */}
