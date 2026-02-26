@@ -6,6 +6,7 @@ import Card from '../components/Card';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import api from '../services/api';
+import Avatar from '../components/Avatar';
 
 const ProfilePage = () => {
   const { user, logout } = useAuth();
@@ -184,8 +185,8 @@ const ProfilePage = () => {
           {!isEditing ? (
             <div>
               <div className="flex items-center mb-6 pb-6 border-b border-slate-700">
-                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary-500 to-purple-600 flex items-center justify-center text-white text-3xl font-bold shadow-lg mr-6">
-                  {user?.name?.charAt(0).toUpperCase()}
+                <div className="mr-6">
+                  <Avatar name={user?.name} role={user?.role} size="xl" />
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold text-slate-100">{user?.name}</h2>
