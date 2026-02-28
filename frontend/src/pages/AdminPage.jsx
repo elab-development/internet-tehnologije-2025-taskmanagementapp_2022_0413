@@ -199,7 +199,6 @@ const AdminPage = () => {
             <div>
               <h1 className="text-3xl font-bold text-slate-100">Admin panel</h1>
               <p className="text-slate-400 mt-2">Upravljanje korisnicima</p>
-              {/* Broja admina */}
               <p className="text-slate-500 text-sm mt-1">Ukupno administratora: {adminCount}</p>
             </div>
             <div className="flex items-center space-x-3">
@@ -264,7 +263,6 @@ const AdminPage = () => {
                         >
                           Uredi
                         </button>
-                        {/* Disabled dugme */}
                         <button 
                           onClick={() => handleDeleteUser(user.id)} 
                           className={`${isUserLastAdmin ? 'text-slate-600 cursor-not-allowed' : 'text-purple-400 hover:text-purple-300'}`}
@@ -338,7 +336,6 @@ const AdminPage = () => {
         <form onSubmit={handleUpdateUser}>
           {error && <div className="bg-purple-500/10 border border-purple-500/20 text-purple-400 px-4 py-3 rounded-lg mb-4 text-sm">{error}</div>}
           
-          {/* Upozorenje */}
           {isEditingLastAdmin() && (
             <div className="bg-purple-500/10 border border-purple-500/20 text-purple-400 px-4 py-3 rounded-lg mb-4 text-sm">{error}
               Ovo je poslednji administrator u sistemu.<br></br>Ne možete mu promeniti ulogu.
@@ -379,7 +376,6 @@ const AdminPage = () => {
           
           <div className="mb-4">
             <label className="block text-sm font-medium text-slate-300 mb-2">Uloga</label>
-            {/* Ne može da obriše ako je poslednji admin */}
             <select 
               value={formData.role} 
               onChange={(e) => setFormData({ ...formData, role: e.target.value })} 
