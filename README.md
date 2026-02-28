@@ -156,10 +156,15 @@ http://localhost:5000/api/docs
 ## Bezbednost
 
 Aplikacija je zaštićena od XSS napada kroz Helmet.js security headere i xss-clean middleware. 
+
 SQL injection je sprečen korišćenjem Sequelize ORM-a sa parametrizovanim upitima. 
+
 CORS je konfigurisan tako da dozvoljava zahteve isključivo sa frontend origine definisane u environment varijablama. 
+
 Brute force napadi na auth endpointe ograničeni su na 10 zahteva na 15 minuta pomoću express-rate-limit. 
+
 IDOR je sprečen proverama vlasništva nad resursom u svakom kontroleru pre nego što se podatak vrati ili izmeni. 
+
 Lozinke su heširane bcrypt algoritmom, a JWT tokeni ističu nakon 7 dana.
 
 ---
@@ -167,5 +172,7 @@ Lozinke su heširane bcrypt algoritmom, a JWT tokeni ističu nakon 7 dana.
 ## CI/CD
 
 GitHub Actions pipeline definisan u `.github/workflows/ci.yml` pokreće se na svaki push i pull request ka `main` i `develop` granama. 
+
 Pokreće backend test suite uz stvarnu MySQL instancu, zatim frontend testove, a u slučaju uspeha gradi Docker image-ove i objavljuje ih na Docker Hub. 
+
 U podešavanjima repozitorijuma potrebno je definisati dva secreta: `DOCKER_USERNAME` i `DOCKER_PASSWORD`.
