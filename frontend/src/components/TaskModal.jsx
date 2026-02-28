@@ -122,7 +122,6 @@ const TaskModal = ({ task, isOpen, onClose, onUpdate, onDelete, users = [], proj
       <div className="space-y-6">
         {isEditing ? (
           <div className="space-y-4">
-            {/* KLJUČNA IZMENA: Samo manageri vide input za naziv, obični useri vide običan text */}
             {isManager ? (
               <Input
                 label="Naziv"
@@ -254,13 +253,11 @@ const TaskModal = ({ task, isOpen, onClose, onUpdate, onDelete, users = [], proj
               )}
             </div>
 
-            {/* Action Buttons */}
             <div className="flex justify-between border-t border-slate-700 pt-4 mb-6">
               {canEdit && <Button variant="outline" onClick={() => setIsEditing(true)}>Uredi</Button>}
               {canDelete && <Button variant="danger" onClick={handleDeleteTask}>Obriši</Button>}
             </div>
 
-            {/* Comments Section */}
             <div>
               <h3 className="text-lg font-semibold text-slate-100 mb-4">Komentari ({comments.length})</h3>
               

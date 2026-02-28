@@ -37,16 +37,13 @@ const Modal = ({
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
-      {/* Backdrop */}
       <div 
         className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       ></div>
 
-      {/* Modal */}
       <div className="flex min-h-full items-center justify-center p-4">
         <div className={`relative bg-slate-800 border border-slate-700 rounded-xl shadow-2xl w-full ${sizes[size]} transform transition-all`}>
-          {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-slate-700">
             <h3 className="text-xl font-semibold text-slate-100">{title}</h3>
             {showClose && (
@@ -61,7 +58,6 @@ const Modal = ({
             )}
           </div>
 
-          {/* Content */}
           <div className="p-6">
             {children}
           </div>

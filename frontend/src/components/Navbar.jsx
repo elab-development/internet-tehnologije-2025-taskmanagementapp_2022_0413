@@ -55,7 +55,6 @@ const Navbar = () => {
               Profil
             </Link>
 
-            {/* User Dropdown */}
             <div className="relative">
               <button
                 onClick={() => setShowUserMenu(!showUserMenu)}

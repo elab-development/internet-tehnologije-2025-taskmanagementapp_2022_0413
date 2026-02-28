@@ -45,24 +45,19 @@ const TaskCard = ({ task, index, onClick }) => {
             ${snapshot.isDragging ? 'opacity-50 shadow-2xl scale-105' : 'opacity-100'}
           `}
         >
-          {/* Naziv zadatka */}
           <h4 className="font-semibold text-slate-100 mb-2">{task.title}</h4>
-          {/* Opis zadatka */}
           {task.description && (
             <p className="text-sm text-slate-400 mb-3 line-clamp-2">
               {task.description}
             </p>
           )}
 
-          {/* Zadatak */}
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              {/* Prioritet */}
               <span className={`px-2 py-0.5 text-xs font-medium rounded-md ${getPriorityBadge(task.priority)}`}>
                 {task.priority}
               </span>
 
-              {/* Zadužen */}
               {task.assignee && (
                 <div className="flex items-center text-xs text-slate-400">
                   <svg className="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -74,7 +69,6 @@ const TaskCard = ({ task, index, onClick }) => {
             </div>
 
             <div className="flex items-center space-x-2">
-              {/* rok */}
               {task.deadline && (
                 <div className={`flex items-center text-xs ${isOverdue ? 'text-purple-400 font-medium' : 'text-slate-400'}`}>
                   <svg className="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -84,7 +78,6 @@ const TaskCard = ({ task, index, onClick }) => {
                 </div>
               )}
               
-              {/* info ikonica */}
               <button
                 onClick={(e) => {
                   e.stopPropagation();

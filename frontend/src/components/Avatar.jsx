@@ -68,25 +68,19 @@ const Avatar = ({ name, role, size = 'md' }) => {
         )}
       </defs>
 
-      {/* Pozadina */}
       <circle cx="50" cy="50" r="50" fill={`url(#${gradientId})`} />
 
-      {/* Glava + telo — spojena silueta */}
       <path
         d="M50 13 C39 13 31 21 31 31 C31 39 36 46 43 48 C34 51 17 59 15 100 L85 100 C83 59 66 51 57 48 C64 46 69 39 69 31 C69 21 61 13 50 13 Z"
         fill={s.suit}
       />
 
-      {/* Košulja — V izrez */}
       <path d="M50 48 L44 58 L50 56 L56 58 Z" fill={s.shirt} />
 
-      {/* Kravata — telo */}
       <path d="M50 54 L46 65 L50 82 L54 65 Z" fill={s.tie} />
 
-      {/* Kravata — čvor */}
       <path d="M46 52 L54 52 L52 56 L48 56 Z" fill={s.tieKnot} />
 
-      {/* Kravata — senka */}
       <path d="M50 54 L48 65 L50 82 L50 54 Z" fill={s.tieShadow} opacity="0.4" />
     </svg>
   );

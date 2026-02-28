@@ -145,7 +145,6 @@ const TaskChart = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {/* Doughnut chart */}
       <div className="bg-slate-800/90 rounded-xl border border-slate-700/50 p-6">
         <div className="flex items-center justify-between mb-4">
           <p className="text-slate-400 text-sm">Ukupno zadataka: <span className="text-slate-100 font-semibold">{total}</span></p>
@@ -153,7 +152,6 @@ const TaskChart = () => {
         <Doughnut data={doughnutData} options={doughnutOptions} />
       </div>
 
-      {/* Bar chart */}
       <div className="bg-slate-800/90 rounded-xl border border-slate-700/50 p-6">
         <div className="flex items-center justify-between mb-4">
           <p className="text-slate-400 text-sm">Raspodela po prioritetu</p>
