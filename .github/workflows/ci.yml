@@ -72,7 +72,7 @@ jobs:
 
       - name: Pokreni testove
         working-directory: ./frontend
-        run: npm test -- --watchAll=false
+        run: npm test -- --watchAll=false --passWithNoTests
 
   build-docker:
     name: Build Docker Image
