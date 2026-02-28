@@ -18,7 +18,9 @@ TaskFlow je full-stack web aplikacija za upravljanje projektima i zadacima. Omog
 ## Autori
 
 Stefan Zeković 
+
 Aleksandar Kovačević 
+
 Sara Da Rold 
 
 ---
