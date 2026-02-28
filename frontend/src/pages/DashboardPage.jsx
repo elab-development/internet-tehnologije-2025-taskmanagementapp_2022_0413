@@ -32,6 +32,9 @@ const DashboardPage = () => {
   });
   const [createError, setCreateError] = useState('');
   const [projectProgress, setProjectProgress] = useState({});
+  const [quote, setQuote] = useState(null);
+  const [currentTime, setCurrentTime] = useState(null);
+  const [liveTime, setLiveTime] = useState(new Date());
 
   const { user, isManager } = useAuth();
   const navigate = useNavigate();
@@ -39,7 +42,47 @@ const DashboardPage = () => {
 
   useEffect(() => {
     fetchData();
+    fetchQuote();
+    fetchTime();
   }, []);
+
+  const fetchQuote = async () => {
+    try {
+      const response = await fetch('/api/quotes');
+      const data = await response.json();
+      setQuote(data);
+    } catch (error) {
+      console.error('Greška pri učitavanju citata:', error);
+    }
+  };
+
+  const fetchTime = async () => {
+    try {
+      const response = await fetch('https://timeapi.io/api/time/current/zone?timeZone=Europe/Belgrade');
+      const data = await response.json();
+      setCurrentTime(data);
+      setLiveTime(new Date(data.dateTime));
+    } catch (error) {
+      console.error('Greška pri učitavanju vremena:', error);
+    }
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setLiveTime(prev => new Date(prev.getTime() + 1000));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const formatDate = () => {
+    const days = ['Nedelja', 'Ponedeljak', 'Utorak', 'Sreda', 'Četvrtak', 'Petak', 'Subota'];
+    const months = ['januar', 'februar', 'mart', 'april', 'maj', 'jun', 'jul', 'avgust', 'septembar', 'oktobar', 'novembar', 'decembar'];
+    return `${days[liveTime.getDay()]}, ${liveTime.getDate()}. ${months[liveTime.getMonth()]} ${liveTime.getFullYear()}.`;
+  };
+
+  const formatTime = () => {
+    return liveTime.toLocaleTimeString('sr-RS', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  };
 
   useEffect(() => {
     let filtered = projects;
@@ -177,7 +220,6 @@ const DashboardPage = () => {
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
-        {/* Welcome Hero */}
         <div className="mb-8 animate-fade-in">
           <div className="relative overflow-hidden rounded-3xl bg-slate-900/80 backdrop-blur-sm p-8 shadow-lg border border-slate-700/50">
             <div className="relative z-10">
@@ -187,14 +229,38 @@ const DashboardPage = () => {
               <p className="text-slate-400 text-lg">
                 Broj vaših aktivnih zadataka: {myTasks.filter(t => t.status !== 'završeno').length}
               </p>
+              {quote && (
+                <div className="mt-4 pt-4 border-t border-slate-700/50">
+                  <p className="text-slate-300 italic text-base">"{quote.q}"</p>
+                  <p className="text-slate-500 text-sm mt-1">— {quote.a}</p>
+                </div>
+              )}
             </div>
           </div>
         </div>
 
-        {/* Stats Grid */}
+        {currentTime && (
+          <div className="flex justify-end mb-6">
+            <div className="bg-slate-900/80 backdrop-blur-sm rounded-2xl px-6 py-4 border border-slate-700/50 shadow-lg flex items-center space-x-6">
+              <div className="flex items-center space-x-2 text-slate-300">
+                <svg className="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span className="font-medium">{formatDate()}</span>
+              </div>
+              <div className="w-px h-6 bg-slate-700"></div>
+              <div className="flex items-center space-x-2 text-slate-300">
+                <svg className="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span className="font-mono text-lg font-semibold text-primary-400">{formatTime()}</span>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10 animate-slide-up">
           
-          {/* Total Projects */}
           <div className="group bg-slate-900/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-primary-500/20 transition-all duration-300 hover:-translate-y-1 border border-slate-700/50">
             <div className="flex items-center justify-between mb-4">
               <div className="p-3 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 shadow-lg">
@@ -212,7 +278,6 @@ const DashboardPage = () => {
             <div className="mt-2 h-1 bg-gradient-to-r from-primary-500 to-purple-500 rounded-full"></div>
           </div>
 
-          {/* Active Tasks */}
           <div className="group bg-slate-900/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-cyan-500/20 transition-all duration-300 hover:-translate-y-1 border border-slate-700/50">
             <div className="flex items-center justify-between mb-4">
               <div className="p-3 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 shadow-lg">
@@ -230,7 +295,6 @@ const DashboardPage = () => {
             <div className="mt-2 h-1 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full"></div>
           </div>
 
-          {/* Completed Tasks */}
           <div className="group bg-slate-900/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-emerald-500/20 transition-all duration-300 hover:-translate-y-1 border border-slate-700/50">
             <div className="flex items-center justify-between mb-4">
               <div className="p-3 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 shadow-lg">
@@ -248,7 +312,6 @@ const DashboardPage = () => {
             <div className="mt-2 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full"></div>
           </div>
 
-          {/* Completion Rate */}
           <div className="group bg-slate-900/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-purple-500/20 transition-all duration-300 hover:-translate-y-1 border border-slate-700/50">
             <div className="flex items-center justify-between mb-4">
               <div className="p-3 rounded-xl bg-gradient-to-br from-purple-500 to-pink-600 shadow-lg">
@@ -267,7 +330,6 @@ const DashboardPage = () => {
           </div>
         </div>
 
-        {/* Projects Section */}
         <div className="mb-10">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold text-slate-100">Projekti</h2>
@@ -278,7 +340,6 @@ const DashboardPage = () => {
             )}
           </div>
 
-          {/* Filters */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             <div className="relative">
               <input
@@ -337,7 +398,6 @@ const DashboardPage = () => {
                       <span className={`px-3 py-1 rounded-lg font-medium ${
                         project.status === 'aktivan' 
                           ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' 
-      
                           : 'bg-slate-500/20 text-slate-400 border border-slate-500/30'
                       }`}>
                         {project.status}
@@ -370,11 +430,9 @@ const DashboardPage = () => {
           )}
         </div>
 
-        {/* Tasks Section */}
-<div className="mb-10">
+        <div className="mb-10">
           <h2 className="text-2xl font-bold text-slate-100 mb-6">Moji zadaci</h2>
           
-          {/* Filters */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
             <div className="relative">
               <input
@@ -482,13 +540,13 @@ const DashboardPage = () => {
             </div>
           )}
         </div>
-          <div className="mb-8">
+
+        <div className="mb-8">
           <h2 className="text-2xl font-bold text-slate-100 mb-6">Statistika zadataka</h2>
           <TaskChart />
-          </div>
+        </div>
       </div>
 
-      {/* Create Project Modal */}
       <Modal isOpen={showCreateModal} onClose={() => {
         setShowCreateModal(false);
         setCreateError('');
