@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import Avatar from './Avatar';
+
 
 const Navbar = () => {
   const { user, logout, isAdmin } = useAuth();
@@ -53,15 +55,12 @@ const Navbar = () => {
               Profil
             </Link>
 
-            {/* User Dropdown */}
             <div className="relative">
               <button
                 onClick={() => setShowUserMenu(!showUserMenu)}
                 className="flex items-center space-x-3 px-4 py-2 rounded-xl hover:bg-gray-50 transition-all duration-200"
               >
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-purple-600 flex items-center justify-center text-white font-bold shadow-lg">
-                  {user?.name?.charAt(0).toUpperCase()}
-                </div>
+                <Avatar name={user?.name} role={user?.role} size="md" />
                 <div className="hidden md:block text-left">
                   <p className="text-sm font-semibold text-gray-900">{user?.name}</p>
                   <p className="text-xs text-gray-500">{user?.role === 'admin' ? 'Administrator' : user?.role === 'project_manager' ? 'Menadžer' : 'Korisnik'}</p>
