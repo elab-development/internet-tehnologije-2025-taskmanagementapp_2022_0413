@@ -46,15 +46,24 @@ const DashboardPage = () => {
     fetchTime();
   }, []);
 
-  const fetchQuote = async () => {
-    try {
-      const response = await fetch('/api/quotes');
-      const data = await response.json();
-      setQuote(data);
-    } catch (error) {
-      console.error('Greška pri učitavanju citata:', error);
+const fetchQuote = async () => {
+  try {
+    const response = await fetch('/api/quotes');
+
+    if (!response.ok) {
+      const text = await response.text(); // dobiješ stvaran odgovor
+      throw new Error(`Server returned ${response.status}: ${text}`);
     }
-  };
+
+    const data = await response.json();
+    setQuote(data);
+
+  } catch (error) {
+    console.error('Greška pri učitavanju citata:', error);
+
+    setQuote({ text: 'Nije moguće učitati citat trenutno.' });
+  }
+};
 
   const fetchTime = async () => {
     try {
