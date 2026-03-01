@@ -48,10 +48,11 @@ const DashboardPage = () => {
 
 const fetchQuote = async () => {
   try {
-    const response = await fetch('/api/quotes');
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
+    const response = await fetch(`${backendUrl}/api/quotes`);
 
     if (!response.ok) {
-      const text = await response.text(); // dobiješ stvaran odgovor
+      const text = await response.text();
       throw new Error(`Server returned ${response.status}: ${text}`);
     }
 
@@ -60,7 +61,6 @@ const fetchQuote = async () => {
 
   } catch (error) {
     console.error('Greška pri učitavanju citata:', error);
-
     setQuote({ text: 'Nije moguće učitati citat trenutno.' });
   }
 };
